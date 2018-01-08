@@ -6,41 +6,32 @@ include 'db.php';
 <head>
 	<title>real time chat system in php</title>
 	<link rel="stylesheet" href="styles.css">
-	<script>
+	<script type="text/javascript">
 		function ajax(){
 		var req=new XMLHttpRequest();
 		req.onreadystatechange=function(){
-		if(req.readyState==4 && req.status=200){
+		if(req.readyState==4 && req.status==200){
 		document.getElementById('chat').innerHTML=req.responseText;
 
 	}
+
 	}
-	req.open('GET','chat.php','true');
+	req.open('GET','chat.php',true);
 	req.send();
+
+
 	}
+	setInterval(function(){ajax()},1000);
+
 	</script>
 </head>
-<body onload="ajax();">
+<body onload="ajax()">
 	<div id="container">
-		<div id="chat_box">
-			<div id="chat"></div>
-<?php
-$query = "SELECT * FROM chat ORDER BY id DESC";
-$run   = $conn->query($query);
-while ($row = $run->fetch_array()):
-?>
-<div id="chat_data">
-				<span style="color:green;"><?php echo $row['name'];
-?>:</span>
-				<span style="color:red;"><?php echo $row['msg'];
-?></span>
-				<span style="float:right;"><?php echo $row['date'];
-?></span>
+	<div id="chat_box">
+		<div id="chat">
+		</div>
 
-
-			</div>
-<?php endwhile;?>
-</div>
+	</div>
 		<form method="post" action="index.php">
 			<input type="text" name="name" placeholder="Enter name">
 			<textarea name="msg" placeholder="Enter the meassage:)"></textarea>
